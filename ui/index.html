@@ -17,7 +17,7 @@
 <body>
   <script type="text/javascript">
     function move_car(action) {
-      var apiUrl = 'http://pi:5000/car/' + action;
+      var apiUrl = 'http://192.168.1.230:5000/car/' + action;
       fetch(apiUrl).then(response => {
         return response.json();
       }).then(data => {
