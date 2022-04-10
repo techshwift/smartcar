@@ -27,8 +27,8 @@ class Servo:
 
 # Main program logic follows:
 if __name__ == '__main__':
-    print("Now servos will rotate to 90°.") 
-    print("If they have already been at 90°, nothing will be observed.")
+    print("Now servos will rotate to 90 deg.") 
+    print("If they have already been at 90 deg, nothing will be observed.")
     print("Please keep the program running when installing the servos.")
     print("After that, you can press ctrl-C to end the program.")
     pwm=Servo()
