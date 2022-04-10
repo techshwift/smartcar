@@ -1,5 +1,7 @@
 import time
-from modules.freenove.PCA9685 import PCA9685
+import sys
+sys.path.append('~/Projects/smartcar/modules/freenove')
+from PCA9685 import PCA9685
 class Motor:
     def __init__(self):
         self.pwm = PCA9685(0x40, debug=True)

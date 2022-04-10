@@ -1,3 +1,5 @@
+import sys
+sys.path.append('~/Projects/smartcar/modules/freenove')
 from flask import Flask,send_from_directory
 
 app = Flask(__name__)
@@ -8,7 +10,7 @@ def send_root(path):
     print("Path is", path)
     return send_from_directory('ui', path)
 
-from modules.freenove.Motor import *            
+from Motor import *            
 motor=Motor()          
 @app.route('/car/<action>')
 def move_motor(action): 
