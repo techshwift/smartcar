@@ -53,7 +53,7 @@ ultrasonic = Ultrasonic()
 buzzer = Buzzer()
 servo = Servo()
 @app.route('/scan/<action>')
-def scan():
+def scan(action):
     while(True):
         if ultrasonic.get_distance() < 10:
             print ("Obstruction detected. Reversing")
