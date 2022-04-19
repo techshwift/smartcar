@@ -52,7 +52,7 @@ def move_motor(action):
 ultrasonic = Ultrasonic()
 buzzer = Buzzer()
 servo = Servo()
-@app.route('/scan/start')
+@app.route('/scan/<action>')
 def scan():
     while(True):
         if ultrasonic.get_distance() < 10:
