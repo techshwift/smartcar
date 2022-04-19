@@ -24,7 +24,8 @@ def send_root(path):
     print("Path is", path)
     return send_from_directory('ui', path)
 
-motor=Motor()          
+motor=Motor()  
+motor.setMotorModel(0,0,0,0)        
 @app.route('/car/<action>')
 def move_motor(action): 
     if action == 'forward':
