@@ -1,6 +1,5 @@
 import sys
 import json
-from modules.freenove.Buzzer import Buzzer
 import time
 sys.path.append('/home/pi/Projects/smartcar/modules/freenove')
 sys.path.append('/home/pi/.local/lib/python2.7/site-packages')
@@ -8,6 +7,9 @@ print("Looking for modules in: ", sys.path)
 
 from modules.freenove.Ultrasonic import Ultrasonic
 from modules.freenove.servo import Servo
+from modules.freenove.Buzzer import Buzzer
+from modules.freenove.Motor import Motor
+
 from flask import Flask,send_from_directory
 
 app = Flask(__name__)
@@ -18,7 +20,6 @@ def send_root(path):
     print("Path is", path)
     return send_from_directory('ui', path)
 
-from Motor import *            
 motor=Motor()          
 @app.route('/car/<action>')
 def move_motor(action): 
@@ -43,9 +44,6 @@ def move_motor(action):
         print ("The car is stopped")
         return json.dumps({'status': 'Stop'})
 
-from Ultrasonic import *
-from Buzzer import *
-from servo import *
 ultrasonic = Ultrasonic()
 buzzer = Buzzer()
 servo = Servo()
