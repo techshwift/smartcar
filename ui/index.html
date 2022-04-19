@@ -28,7 +28,7 @@
       });
     }
     function scan() {
-      var apiUrl = 'http://192.168.1.230:5000/scan';
+      var apiUrl = 'http://192.168.1.230:5000/scan/start';
       fetch(apiUrl).then(response => {
         return response.json();
       }).then(data => {
