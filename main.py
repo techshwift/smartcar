@@ -2,11 +2,12 @@ import sys
 import json
 from modules.freenove.Buzzer import Buzzer
 import time
+sys.path.append('/home/pi/Projects/smartcar/modules/freenove')
+sys.path.append('/home/pi/.local/lib/python2.7/site-packages')
+print("Looking for modules in: ", sys.path)
 
 from modules.freenove.Ultrasonic import Ultrasonic
 from modules.freenove.servo import Servo
-# sys.path.append('/home/pi/Projects/smartcar/modules/freenove')
-# sys.path.append('/home/pi/.local/lib/python2.7/site-packages')
 from flask import Flask,send_from_directory
 
 app = Flask(__name__)
