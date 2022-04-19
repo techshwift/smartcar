@@ -57,22 +57,22 @@ def scan(action):
     motor.setMotorModel(0,0,0,0)      
     servo.setServoPwm('0', 90)  
     while(True):
-        if ultrasonic.get_distance() < 10:
-            print ("Obstruction detected. Reversing")
+        if ultrasonic.get_distance() < 30:
+            print ("Obstruction detected. Stop and look around")
             move_motor('stop')
-            print ("Looking around... ")
-            servo.setServoPwm('0', 1)
-            print("Distance to obstacle on the left: ", ultrasonic.get_distance())
-            time.sleep(1)
-            servo.setServoPwm('0', 90)
-            print("Distance to obstacle on the right: ", ultrasonic.get_distance())
-            time.sleep(1)
-            servo.setServoPwm('0', 179)
-            print("Distance to obstacle on the right: ", ultrasonic.get_distance())
-            time.sleep(1)
-            servo.setServoPwm('0', -89)
-            print("Distance to obstacle on the right: ", ultrasonic.get_distance())
-            time.sleep(1)
+            for i in range(90,1,-1):
+                servo.setServoPwm('0',i)
+                print("Distance to obstacle: ", ultrasonic.get_distance())
+                time.sleep(0.01)
+            for i in range(1,179,1):
+                servo.setServoPwm('0',i)
+                print("Distance to obstacle: ", ultrasonic.get_distance())
+                time.sleep(0.01)
+            for i in range(179,90,-1):
+                servo.setServoPwm('0',i)
+                print("Distance to obstacle: ", ultrasonic.get_distance())
+                time.sleep(0.01)
+
             return json.dumps({'status':'Looking around'})
         else:
             move_motor('forward')
