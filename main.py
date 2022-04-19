@@ -19,7 +19,7 @@ from flask import Flask,send_from_directory
 app = Flask(__name__)
 
 @app.route('/', defaults={'path': 'index.html'})
-@app.route('/<path>')
+#@app.route('/<path>')
 def send_root(path):
     print("Path is", path)
     return send_from_directory('ui', path)
