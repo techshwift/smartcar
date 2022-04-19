@@ -54,6 +54,8 @@ buzzer = Buzzer()
 servo = Servo()
 @app.route('/scan/<action>')
 def scan(action):
+    motor.setMotorModel(0,0,0,0)      
+    servo.setServoPwm('0', 90)  
     while(True):
         if ultrasonic.get_distance() < 10:
             print ("Obstruction detected. Reversing")
@@ -61,14 +63,16 @@ def scan(action):
             print ("Looking around... ")
             servo.setServoPwm('0', 0)
             print("Distance to obstacle on the left: ", ultrasonic.get_distance())
-            time.sleep(0.1)
+            time.sleep(1)
             servo.setServoPwm('0', 180)
             print("Distance to obstacle on the right: ", ultrasonic.get_distance())
-            time.sleep(0.1)
+            time.sleep(1)
+            servo.setServoPwm('0', 90)
+            print("Distance to obstacle on the right: ", ultrasonic.get_distance())
+            time.sleep(1)
             return json.dumps({'status':'Looking around'})
         else:
             move_motor('forward')
-            return json.dumps({'status':'Scan forward'})
 
 if __name__ == '__main__':
     #app.run(debug=True, host='0.0.0.0',ssl_context=('cert.pem', 'key.pem'))
