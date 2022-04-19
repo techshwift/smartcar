@@ -55,25 +55,47 @@ servo = Servo()
 @app.route('/scan/<action>')
 def scan(action):
     motor.setMotorModel(0,0,0,0)      
-    servo.setServoPwm('0', 90)  
+    servo.setServoPwm('0', 90)
+    dist_to_obst_right = 200
+    dist_to_obst_left = 200
+    dist_to_obst_front = 200
     while(True):
-        if ultrasonic.get_distance() < 30:
+        if ultrasonic.get_distance() <= 15:
+            dist_to_obst_front = 15
             print ("Obstruction detected. Stop and look around")
             move_motor('stop')
             for i in range(90,1,-1):
                 servo.setServoPwm('0',i)
-                print("Distance to obstacle: ", ultrasonic.get_distance())
+                if i == 1:
+                    dist_to_obst_left = ultrasonic.get_distance()
+                    print("Distance to obstacle on left: ", dist_to_obst_left)
                 time.sleep(0.01)
             for i in range(1,179,1):
                 servo.setServoPwm('0',i)
-                print("Distance to obstacle: ", ultrasonic.get_distance())
+                if i == 179:
+                    dist_to_obst_right = ultrasonic.get_distance()
+                    print("Distance to obstacle: ", dist_to_obst_right)
                 time.sleep(0.01)
             for i in range(179,90,-1):
                 servo.setServoPwm('0',i)
-                print("Distance to obstacle: ", ultrasonic.get_distance())
+                if i == 90:
+                    print("Returned to normal position")
                 time.sleep(0.01)
 
-            return json.dumps({'status':'Looking around'})
+            if dist_to_obst_left > 15 and dist_to_obst_left >= dist_to_obst_right:
+                move_motor('left')
+                time.sleep(0.75)
+                move_motor('forward')
+            elif dist_to_obst_right > 15:
+                move_motor('right')
+                time.sleep(0.75)
+                move_motor('forward')
+            else:
+                move_motor('right')
+                time.sleep(1.5)
+                move_motor('forward')
+
+            #return json.dumps({'status':'Looking around'})
         else:
             move_motor('forward')
 
