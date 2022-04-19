@@ -64,6 +64,7 @@ def scan(action):
             servo.setServoPwm('0', 0)
             print("Distance to obstacle on the left: ", ultrasonic.get_distance())
             time.sleep(1)
+            servo.setServoPwm('0', 90)
             servo.setServoPwm('0', 180)
             print("Distance to obstacle on the right: ", ultrasonic.get_distance())
             time.sleep(1)
