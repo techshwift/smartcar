@@ -1,5 +1,10 @@
 import sys
 import json
+from modules.freenove.Buzzer import Buzzer
+import time
+
+from modules.freenove.Ultrasonic import Ultrasonic
+from modules.freenove.servo import Servo
 sys.path.append('/home/pi/Projects/smartcar/modules/freenove')
 from flask import Flask,send_from_directory
 
@@ -35,6 +40,29 @@ def move_motor(action):
         motor.setMotorModel(0,0,0,0)                   #Stop
         print ("The car is stopped")
         return json.dumps({'status': 'Stop'})
+
+from Ultrasonic import *
+from Buzzer import *
+from servo import *
+ultrasonic = Ultrasonic()
+buzzer = Buzzer()
+servo = Servo()
+@app.route('/scan')
+def scan():
+    while(True):
+        if ultrasonic.get_distance() < 10:
+            print ("Obstruction detected. Reversing")
+            move_motor('stop')
+            print ("Looking around... ")
+            servo.setServoPwm('0', 0)
+            print("Distance to obstacle on the left: ", ultrasonic.get_distance())
+            time.sleep(0.1)
+            servo.setServoPwm('0', 180)
+            print("Distance to obstacle on the right: ", ultrasonic.get_distance())
+            time.sleep(0.1)
+        else:
+            move_motor('forward')
+
 
 if __name__ == '__main__':
     #app.run(debug=True, host='0.0.0.0',ssl_context=('cert.pem', 'key.pem'))

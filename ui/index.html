@@ -27,7 +27,17 @@
         // Do something for an error here
       });
     }
-    
+    function scan() {
+      var apiUrl = 'http://192.168.1.230:5000/scan';
+      fetch(apiUrl).then(response => {
+        return response.json();
+      }).then(data => {
+        // Work with JSON data here
+        console.log(data);
+      }).catch(err => {
+        // Do something for an error here
+      });
+    }
 </script>
   <!-- Add your site or application content here -->
   <h2>Smart Car Control Panel</h2>
@@ -43,6 +53,8 @@
     </tr>
   </table>
   <center>  <button onclick="move_car('stop')">Stop</button>
+  </center>
+  <center>  <button onclick="scan()">Scan</button>
   </center>
   <!--<a href="/car/forward">Move Forward</a><br>
   <a href="/car/reverse">Move Reverse</a><br>
